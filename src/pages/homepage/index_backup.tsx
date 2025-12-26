@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 
-export default function Homepage({ children }: { children: React.ReactNode }) {
+export default function Homepage() {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
-  const [userData, setUserData] = useState<any>({
-    email: "",
-    first_name: "",
-    last_name: "",
-    avatar: "",
-  });
 
   useEffect(() => {
     // cek token di localStorage
@@ -27,6 +19,12 @@ export default function Homepage({ children }: { children: React.ReactNode }) {
     setChecked(true);
   }, [router]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    router.replace("./");
+  };
+
   const getData = async () => {
     const data = await fetch("https://reqres.in/api/users", {
       method: "GET",
@@ -36,11 +34,7 @@ export default function Homepage({ children }: { children: React.ReactNode }) {
       },
     });
     const result = await data.json();
-    const emailcheck = localStorage.getItem("userEmail");
-    const userData = result.data.filter(
-      (array: { email: string }) => array.email == emailcheck
-    )[0];
-    setUserData(userData);
+    console.log(result);
   };
 
   useEffect(() => {
@@ -48,14 +42,24 @@ export default function Homepage({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <main>
-      <SidebarProvider>
-        <AppSidebar data={userData} />
-        <main>
-          <SidebarTrigger />
-          {children}
-        </main>
-      </SidebarProvider>
+    <main
+      className={`flex min-h-screen flex-col items-center justify-center p-8 ${
+        !checked ? "hidden" : ""
+      }`}
+    >
+      <h1 className="text-3xl font-bold">
+        Selamat datang{userEmail ? `, ${userEmail}` : ""} 🎉
+      </h1>
+      <p className="mt-4 text-gray-600">
+        Kamu berhasil login menggunakan token sebagai session.
+      </p>
+
+      <button
+        onClick={handleLogout}
+        className="mt-6 px-4 py-2 bg-red-500 text-white rounded"
+      >
+        Logout
+      </button>
     </main>
   );
 }
