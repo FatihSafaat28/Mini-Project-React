@@ -23,5 +23,14 @@ Page
 
    2. Filter User Data sebagai user login pada sidebar footer.
 
-      - Melakukan getData, memfilter berdasarkan email dari local storage untuk mengambil user data yang digunakan login.
+      - Melakukan getLoginData untuk mengambil seluruh data (dengan per_Page =12 akan menampilkan seluruh data), lalu melakukan filter berdasarkan email dari local storage untuk mengambil user data yang digunakan login.
       - Digunakan untuk menampilkan User Login pada bagian sidebar footer.
+
+   3. Get User List, Fitur Show Per Page, dan Pagination
+
+      - Show per pages dengan value [3,6,9,12] dan Pagination otomatis menyesuaikan jumlahnya berdasarkan total_pages yang berubah berdasarkan per_pages nya.
+
+   4. Modal Single User
+
+      - Pada Shadcn komponen modal disebut Dialog.
+      - Menampilkan single user ketika salah satu baris user list di klik.
