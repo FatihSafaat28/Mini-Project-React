@@ -30,7 +30,6 @@ Page
 
       - Show per pages dengan value [3,6,9,12] dan Pagination otomatis menyesuaikan jumlahnya berdasarkan total_pages yang berubah berdasarkan per_pages nya.
 
-   4. Modal Single User
+   4. Dynamic Routing untuk single user
 
-      - Pada Shadcn komponen modal disebut Dialog.
-      - Menampilkan single user ketika salah satu baris user list di klik.
+      - Membuat /homepage/[id] untuk membuat dynamic routing. Mengirim dan Menangkap id dengan useRouter.

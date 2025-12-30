@@ -1,27 +1,38 @@
 import { Coffee } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { NavUser } from "./sidebar-component/nav-user";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+interface User {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+}
 interface AppSidebarProps {
-  data: {
-    email: string;
-    first_name: string;
-    last_name: string;
-    avatar: string;
-    // Add other properties of data if they are used
-  };
+  user: User;
+  sidebarGroupItem: User[];
 }
 
-export function AppSidebar({ data }: AppSidebarProps) {
+export function AppSidebar({ user, sidebarGroupItem }: AppSidebarProps) {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -43,12 +54,38 @@ export function AppSidebar({ data }: AppSidebarProps) {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <Collapsible defaultOpen className="group/collapsible">
+          <SidebarGroup>
+            <SidebarGroupLabel
+              asChild
+              className="group/label text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm"
+            >
+              <CollapsibleTrigger>
+                List User{" "}
+                <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {sidebarGroupItem.map((item: any) => (
+                    <SidebarMenuSub key={item.id}>
+                      <SidebarMenuSubButton asChild>
+                        <a href={`/homepage/${item.id}`}>
+                          {item.first_name} {item.last_name}
+                        </a>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSub>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser data={data} />
+        <NavUser data={user} />
       </SidebarFooter>
     </Sidebar>
   );

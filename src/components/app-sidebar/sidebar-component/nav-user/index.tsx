@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  CreditCard,
-  EllipsisVertical,
-  LogOut,
-  Bell,
-  UserCircle,
-} from "lucide-react";
+import { EllipsisVertical, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,11 +22,11 @@ import router from "next/router";
 
 interface AppSidebarProps {
   data: {
+    id: number;
     email: string;
     first_name: string;
     last_name: string;
     avatar: string;
-    // Add other properties of data if they are used
   };
 }
 
