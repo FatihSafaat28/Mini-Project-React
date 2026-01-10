@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TabelPagination from "@/components/pagination";
-import HomepageLayout from "@/components/layouts/HomepageLayout";
+import HomepageLayout from "@/components/HomepageLayout";
 import { useRouter } from "next/router";
 
 export default function Homepage() {
