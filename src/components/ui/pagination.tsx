@@ -49,9 +49,9 @@ function PaginationLink({
   ...props
 }: PaginationLinkProps) {
   return (
-    <a
+    <span
       aria-current={isActive ? "page" : undefined}
-      data-slot="pagination-link"
+      // data-slot="pagination-link"
       data-active={isActive}
       className={cn(
         buttonVariants({

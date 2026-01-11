@@ -16,13 +16,21 @@ import {
   PaginationNext,
 } from "../ui/pagination";
 
-const TabelPagination = (
-  rowsPerPage: string | undefined,
-  setRowsPerPage: ((value: string) => void) | undefined,
-  totalPages: any,
-  pages: any,
-  setPages: ((value: string) => void) | undefined
-) => {
+interface TabelPaginationProps {
+  rowsPerPage: string;
+  setRowsPerPage: (value: string) => void;
+  totalPages: number;
+  pages: string;
+  setPages: (value: string) => void;
+}
+
+const TabelPagination = ({
+  rowsPerPage,
+  setRowsPerPage,
+  totalPages,
+  pages,
+  setPages,
+}: TabelPaginationProps) => {
   const arrayPagination = [];
   for (let i = 0; i < totalPages; i++) {
     arrayPagination.push(`${i + 1}`);
@@ -36,7 +44,13 @@ const TabelPagination = (
         >
           Rows per page
         </Label>
-        <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
+        <Select
+          value={rowsPerPage}
+          onValueChange={(value) => {
+            setRowsPerPage(value);
+            setPages("1");
+          }}
+        >
           <SelectTrigger size="sm" className="w-20" id="rows-per-page">
             <SelectValue />
           </SelectTrigger>
@@ -53,8 +67,8 @@ const TabelPagination = (
           <PaginationContent>
             <PaginationPrevious
               onClick={() => {
-                if (pages > 1) {
-                  setPages?.(`${parseInt(pages) - 1}`);
+                if (parseInt(pages) > 1) {
+                  setPages(`${parseInt(pages) - 1}`);
                 }
               }}
             />
@@ -62,9 +76,8 @@ const TabelPagination = (
             {arrayPagination.map((item) => (
               <PaginationItem key={item}>
                 <PaginationLink
-                  href="#"
                   isActive={pages == item}
-                  onClick={() => setPages?.(item)}
+                  onClick={() => setPages(item)}
                 >
                   {item}
                 </PaginationLink>
@@ -72,8 +85,8 @@ const TabelPagination = (
             ))}
             <PaginationNext
               onClick={() => {
-                if (pages < totalPages) {
-                  setPages?.(`${parseInt(pages) + 1}`);
+                if (parseInt(pages) < totalPages) {
+                  setPages(`${parseInt(pages) + 1}`);
                 }
               }}
             />

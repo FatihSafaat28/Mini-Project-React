@@ -23,10 +23,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function LoginForm() {
   //  Test Login
   //  Email : lindsay.ferguson@reqres.in
   const router = useRouter();
@@ -59,7 +56,7 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       <form>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">

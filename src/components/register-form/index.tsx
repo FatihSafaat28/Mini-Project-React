@@ -23,10 +23,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function RegisterForm() {
   //      REGISTER
   //     "email": "lindsay.ferguson@reqres.in",
   //     "password": "pistol"
@@ -61,7 +58,7 @@ export function RegisterForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       <form>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">

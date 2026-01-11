@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import HomepageLayout from "@/components/HomepageLayout";
+import HomepageLayout from "@/pages/homepage/layout";
 import {
   Breadcrumb,
   BreadcrumbList,

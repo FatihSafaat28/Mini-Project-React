@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TabelPagination from "@/components/pagination";
-import HomepageLayout from "@/components/HomepageLayout";
+import HomepageLayout from "@/pages/homepage/layout";
 import { useRouter } from "next/router";
 
 export default function Homepage() {
@@ -96,13 +96,13 @@ export default function Homepage() {
           ))}
         </TableBody>
       </Table>
-      {TabelPagination(
-        rowsPerPage,
-        setRowsPerPage,
-        totalPages,
-        pages,
-        setPages
-      )}
+      <TabelPagination
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+        totalPages={totalPages}
+        pages={pages}
+        setPages={setPages}
+      />
     </HomepageLayout>
   );
 }
