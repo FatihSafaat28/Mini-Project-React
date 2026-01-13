@@ -1,4 +1,4 @@
-import { Coffee } from "lucide-react";
+import { Coffee, Eye, EyeOff } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,88 +23,138 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function LoginForm() {
+export function LoginForm({
+  isLogin,
+  handleLogin,
+}: {
+  isLogin: string;
+  handleLogin: () => void;
+}) {
   //  Test Login
   //  Email : lindsay.ferguson@reqres.in
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<any>({ email: "", password: "" });
+  const [registerData, setRegisterData] = useState<any>({
+    email: "",
+    password: "",
+  });
   const [open, setOpen] = useState<any>({ isOpen: false, isSuccess: false });
 
   const submitLogin = async () => {
-    const payloadLogin = {
-      email: loginData.email,
-      password: loginData.password,
-    };
-    const headers = {
-      "Content-Type": "application/json",
-      "x-api-key": "reqres_746dd67bd84f4cab98b82566173afb71",
-    };
-    const response = await fetch("https://reqres.in/api/login", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payloadLogin),
-    });
-    const data = await response.json();
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("userEmail", loginData.email);
-      setOpen({ isOpen: true, isSuccess: true });
-    } else {
+    try {
+      const payloadLogin = {
+        email: loginData.email,
+        password: loginData.password,
+      };
+      const headers = {
+        "Content-Type": "application/json",
+        "x-api-key": "reqres_746dd67bd84f4cab98b82566173afb71",
+      };
+      const response = await fetch("https://reqres.in/api/login", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(payloadLogin),
+      });
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userEmail", loginData.email);
+        setOpen({ isOpen: true, isSuccess: true });
+      } else {
+        setOpen({ isOpen: true, isSuccess: false });
+      }
+      console.log("login = ", data);
+    } catch (error) {
+      console.error("Login error:", error);
       setOpen({ isOpen: true, isSuccess: false });
     }
-    console.log("login = ", data);
+  };
+
+  const submitRegister = async () => {
+    try {
+      const payloadRegister = {
+        email: registerData.email,
+        password: registerData.password,
+      };
+      const headers = {
+        "Content-Type": "application/json",
+        "x-api-key": "reqres_746dd67bd84f4cab98b82566173afb71",
+      };
+      const response = await fetch("https://reqres.in/api/register", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(payloadRegister),
+      });
+      const data = await response.json();
+      if (data.token) {
+        setOpen({ isOpen: true, isSuccess: true });
+      } else {
+        setOpen({ isOpen: true, isSuccess: false });
+      }
+      console.log("register = ", data);
+    } catch (error) {
+      console.error("Register error:", error);
+      setOpen({ isOpen: true, isSuccess: false });
+    }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6")}>
-      <form>
-        <FieldGroup>
-          <div className="flex flex-col items-center gap-2 text-center">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <Coffee className="size-6" />
-              </div>
-              <span className="sr-only">My Coffee</span>
-            </a>
-            <h1 className="text-xl font-bold">Welcome to My Coffee</h1>
-            <FieldDescription>
-              Don&apos;t have an account? <a href="/register">Sign up</a>
-            </FieldDescription>
-          </div>
-          <Field>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              onChange={(e: any) => {
-                setLoginData({ ...loginData, email: e.target.value });
-              }}
-              required
-            />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Input
-              id="password"
-              type="password"
-              placeholder="password"
-              onChange={(e: any) => {
+    <>
+      <Field>
+        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <Input
+          id="email"
+          type="email"
+          placeholder="m@example.com"
+          value={isLogin === "Sign up" ? loginData.email : registerData.email}
+          onChange={(e: any) => {
+            if (isLogin === "Sign up") {
+              setLoginData({ ...loginData, email: e.target.value });
+            } else {
+              setRegisterData({ ...registerData, email: e.target.value });
+            }
+          }}
+          required
+        />
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="password">Password</FieldLabel>
+        <div className="relative">
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="password"
+            value={
+              isLogin === "Sign up" ? loginData.password : registerData.password
+            }
+            onChange={(e: any) => {
+              if (isLogin === "Sign up") {
                 setLoginData({ ...loginData, password: e.target.value });
-              }}
-              required
-            />
-          </Field>
-          <Field>
-            <Button type="button" onClick={() => submitLogin()}>
-              Login
-            </Button>
-          </Field>
-        </FieldGroup>
-      </form>
+              } else {
+                setRegisterData({ ...registerData, password: e.target.value });
+              }
+            }}
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+      </Field>
+      <Field>
+        <Button
+          className="cursor-pointer"
+          type="button"
+          onClick={isLogin === "Sign up" ? submitLogin : submitRegister}
+        >
+          {isLogin === "Sign up" ? "Login" : "Register"}
+        </Button>
+      </Field>
       <AlertDialog
         open={open.isOpen}
         onOpenChange={(val) => setOpen({ ...open, isOpen: val })}
@@ -112,29 +162,48 @@ export function LoginForm() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {open.isSuccess ? "Login Success" : "Login Failed"}
+              {open.isSuccess
+                ? `${isLogin === "Sign up" ? `Login` : `Register`} Success`
+                : `${isLogin === "Sign up" ? `Login` : `Register`} Failed`}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {open.isSuccess
-                ? "Please press Continue to the homepage."
-                : "Sign-in failed. Your email or password is incorrect. Please try again."}
+                ? `Please press Continue to ${
+                    isLogin === "Sign up" ? `the homepage.` : `Sign-in`
+                  }`
+                : `${
+                    isLogin === "Sign up" ? `Sign-in` : `Sign-up`
+                  } failed. Your email or password is incorrect. Please try again.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel
+            <AlertDialogAction
+              className="cursor-pointer"
               onClick={() => {
                 if (open.isSuccess) {
-                  router.push("/homepage");
+                  {
+                    if (isLogin === "Sign up") {
+                      router.push("/homepage");
+                    } else {
+                      handleLogin();
+                      setRegisterData({ email: "", password: "" });
+                    }
+                  }
                 } else {
+                  if (isLogin === "Sign up") {
+                    setLoginData({ email: "", password: "" });
+                  } else {
+                    setRegisterData({ email: "", password: "" });
+                  }
                   setOpen({ ...open, isOpen: false });
                 }
               }}
             >
               {open.isSuccess ? "Continue" : "Try Again"}
-            </AlertDialogCancel>
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </>
   );
 }
