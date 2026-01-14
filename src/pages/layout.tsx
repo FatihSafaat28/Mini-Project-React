@@ -20,11 +20,11 @@ export default function LoginLayout({
                 <div className="flex flex-col items-center gap-2 text-center">
                   <div className="flex flex-col items-center gap-2 font-medium">
                     <div className="flex size-8 items-center justify-center rounded-md">
-                      <Coffee className="size-6" />
+                      <Coffee className="size-6 dark:text-white" />
                     </div>
                     <span className="sr-only">My Coffee</span>
                   </div>
-                  <h1 className="text-xl font-bold">
+                  <h1 className="text-xl font-bold dark:text-white">
                     {isLogin === "Sign up"
                       ? "Welcome to My Coffee"
                       : "Create your new account"}

@@ -1,24 +1,15 @@
 import { Coffee, Eye, EyeOff } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -102,8 +93,11 @@ export function LoginForm({
   return (
     <>
       <Field>
-        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <FieldLabel className="dark:text-white" htmlFor="email">
+          Email
+        </FieldLabel>
         <Input
+          className="dark:text-white"
           id="email"
           type="email"
           placeholder="m@example.com"
@@ -119,9 +113,12 @@ export function LoginForm({
         />
       </Field>
       <Field>
-        <FieldLabel htmlFor="password">Password</FieldLabel>
+        <FieldLabel className="dark:text-white" htmlFor="password">
+          Password
+        </FieldLabel>
         <div className="relative">
           <Input
+            className="dark:text-white"
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="password"
@@ -140,7 +137,7 @@ export function LoginForm({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
@@ -148,7 +145,7 @@ export function LoginForm({
       </Field>
       <Field>
         <Button
-          className="cursor-pointer"
+          className="cursor-pointer font-bold"
           type="button"
           onClick={isLogin === "Sign up" ? submitLogin : submitRegister}
         >

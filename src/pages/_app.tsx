@@ -1,3 +1,5 @@
+import { ModeToggle } from "@/components/theme-button";
+import { ThemeProvider } from "@/context/themecontext";
 import "@/styles/globals.css";
 import "@flaticon/flaticon-uicons/css/regular/rounded.css";
 import type { AppProps } from "next/app";
@@ -15,8 +17,18 @@ const playfair = Playfair_Display({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${playfair.variable} ${openSans.className}`}>
-      <Component {...pageProps} />
-    </main>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <main className={`${playfair.variable} ${openSans.className} relative`}>
+        <div className="absolute top-4 right-2.5 justify-end text-black z-10">
+          <ModeToggle />
+        </div>
+        <Component {...pageProps} />
+      </main>
+    </ThemeProvider>
   );
 }

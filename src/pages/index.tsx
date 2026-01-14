@@ -20,7 +20,7 @@ export default function Home() {
             : "Already have an account?"}
         </span>
         <div
-          className="cursor-pointer hover:underline hover:text-black"
+          className="cursor-pointer hover:underline hover:text-black dark:hover:text-gray-200"
           onClick={handleLogin}
         >
           {isLogin}
