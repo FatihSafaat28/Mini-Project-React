@@ -33,3 +33,11 @@ Page
    4. Dynamic Routing untuk single user
 
       - Membuat /homepage/[id] untuk membuat dynamic routing. Mengirim dan Menangkap id dengan useRouter.
+
+**FIX**
+1. Memperbaiki pagination, ketika _show page_ diubah, page berubah otomatis ke page 1.
+2. Memperbaiki Login dan Register menjadi Single Page.
+3. Memperbaiki Struktur File dengan menggunakan layout.
+
+**ADD**
+1. Menambahkan Fitur Dark mode and Light Mode.
